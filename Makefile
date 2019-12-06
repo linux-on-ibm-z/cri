@@ -94,17 +94,10 @@ $(BUILD_DIR)/$(CONTAINERD_BIN): $(SOURCES) $(PLUGIN_SOURCES)
 
 test: ## unit test
 	@echo "$(WHALE) $@"
-	ifeq ($(ARCH),s390x)
-		$(GO) test -timeout=10m ./pkg/... \
+	$(GO) test -timeout=10m -race ./pkg/... \
 			-tags '$(BUILD_TAGS)' \
 	        	-ldflags '$(GO_LDFLAGS)' \
 			-gcflags '$(GO_GCFLAGS)'
-	else
-		$(GO) test -timeout=10m -race ./pkg/... \
-			-tags '$(BUILD_TAGS)' \
-			-ldflags '$(GO_LDFLAGS)' \
-			-gcflags '$(GO_GCFLAGS)'
-	endif	
 
 $(BUILD_DIR)/integration.test: $(INTEGRATION_SOURCES)
 	@echo "$(WHALE) $@"
