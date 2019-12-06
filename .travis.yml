@@ -6,13 +6,16 @@ go:
   - 1.12.x
   - tip
 
-
 matrix:
   allow_failures:
     - go: tip
   include:
   - os: linux	
     arch: s390x
+    go: 1.12.x
+  - os: linux	
+    arch: s390x
+    go: tip
 
 sudo: required
 
