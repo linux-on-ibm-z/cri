@@ -94,7 +94,7 @@ $(BUILD_DIR)/$(CONTAINERD_BIN): $(SOURCES) $(PLUGIN_SOURCES)
 
 test: ## unit test
 	@echo "$(WHALE) $@"
-	ifeq ($(ARCH),s390x))
+	ifeq ($(ARCH),s390x)
 		$(GO) test -timeout=10m ./pkg/... \
 			-tags '$(BUILD_TAGS)' \
 	        	-ldflags '$(GO_LDFLAGS)' \
