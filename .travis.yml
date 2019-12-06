@@ -48,9 +48,14 @@ script:
   - mv /home/travis/gopath/src/github.com/linux-on-ibm-z/cri /home/travis/gopath/src/github.com/containerd
   - make containerd
   - sudo PATH=$PATH GOPATH=$GOPATH make install-containerd
-  - make test
-  - make test-integration
-  - make test-cri
+  - if [ "$HOSTTYPE" == "s390x" ];then
+      make test;
+    else 
+      make test;
+      make test-integration;
+      make test-cri;
+    fi
+
 after_script:
   # Abuse travis to preserve the log.
   - cat /tmp/test-integration/containerd.log
