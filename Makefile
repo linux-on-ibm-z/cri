@@ -101,9 +101,9 @@ test: ## unit test
 			-gcflags '$(GO_GCFLAGS)'
 	else
 		$(GO) test -timeout=10m -race ./pkg/... \
-				-tags '$(BUILD_TAGS)' \
-				-ldflags '$(GO_LDFLAGS)' \
-				-gcflags '$(GO_GCFLAGS)'
+			-tags '$(BUILD_TAGS)' \
+			-ldflags '$(GO_LDFLAGS)' \
+			-gcflags '$(GO_GCFLAGS)'
 	endif	
 
 $(BUILD_DIR)/integration.test: $(INTEGRATION_SOURCES)
