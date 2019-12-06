@@ -10,6 +10,13 @@ go:
 matrix:
   allow_failures:
     - go: tip
+  include:
+  - os: linux	
+    arch: s390x
+    go: 1.12.x
+  - os: linux	
+    arch: s390x
+    go: tip
 
 sudo: required
 
@@ -40,9 +47,13 @@ script:
   - make install.deps
   - make containerd
   - sudo PATH=$PATH GOPATH=$GOPATH make install-containerd
-  - make test
-  - make test-integration
-  - make test-cri
+  - if [ "$HOSTTYPE" == "s390x" ];then
+      make test;
+    else 
+      make test;
+      make test-integration;
+      make test-cri;
+    fi  
 after_script:
   # Abuse travis to preserve the log.
   - cat /tmp/test-integration/containerd.log
