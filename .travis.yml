@@ -1,3 +1,6 @@
+arch: s390x
+dist: xenial
+
 git:
   depth: 150
 
