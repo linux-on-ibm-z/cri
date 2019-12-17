@@ -44,6 +44,8 @@ script:
   - make .install.gitvalidation
   - make .gitvalidation
   - make install.deps
+  - mkdir -p /home/travis/gopath/src/github.com/containerd/
+  - mv /home/travis/gopath/src/github.com/linux-on-ibm-z/cri /home/travis/gopath/src/github.com/containerd
   - make containerd
   - sudo PATH=$PATH GOPATH=$GOPATH make install-containerd
   - make test
