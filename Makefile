@@ -93,7 +93,7 @@ $(BUILD_DIR)/$(CONTAINERD_BIN): $(SOURCES) $(PLUGIN_SOURCES)
 
 test: ## unit test
 	@echo "$(WHALE) $@"
-	$(GO) test -timeout=10m -race ./pkg/... \
+	$(GO) test -timeout=10m ./pkg/... \
 		-tags '$(BUILD_TAGS)' \
 	        -ldflags '$(GO_LDFLAGS)' \
 		-gcflags '$(GO_GCFLAGS)'
