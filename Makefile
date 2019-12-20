@@ -38,8 +38,9 @@ GO_LDFLAGS := -X $(PROJECT)/vendor/github.com/containerd/containerd/version.Vers
 SOURCES := $(shell find cmd/ pkg/ vendor/ -name '*.go')
 PLUGIN_SOURCES := $(shell ls *.go)
 INTEGRATION_SOURCES := $(shell find integration/ -name '*.go')
-ifeq ($(GOARCH),amd64)
-	TESTFLAGS_RACE := -race
+TESTFLAGS_RACE := -race
+ifeq ($(GOARCH),s390x)
+	TESTFLAGS_RACE := 
 endif
 
 CONTAINERD_BIN := containerd
