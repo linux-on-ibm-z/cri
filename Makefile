@@ -37,7 +37,7 @@ endif
 # Add `-TEST` suffix to indicate that all binaries built from this repo are for test.
 GO_LDFLAGS := -X $(PROJECT)/vendor/github.com/containerd/containerd/version.Version=$(VERSION)-TEST
 ifeq ($(GOARCH),amd64)
-	TESTFLAGS_RACE= -race
+	TESTFLAGS_RACE := -race
 endif
 SOURCES := $(shell find cmd/ pkg/ vendor/ -name '*.go')
 PLUGIN_SOURCES := $(shell ls *.go)
