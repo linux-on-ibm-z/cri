@@ -10,7 +10,7 @@ go:
 matrix:
   allow_failures:
     - go: tip
-    include:
+  include:
   - os: linux	
     arch: s390x
     go: 1.12.x
