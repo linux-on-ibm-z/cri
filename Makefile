@@ -15,7 +15,6 @@
 GO := go
 GOOS := $(shell $(GO) env GOOS)
 GOARCH := $(shell $(GO) env GOARCH)
-ARCH := $(shell uname -m)
 WHALE := "🇩"
 ONI := "👹"
 ifeq ($(GOOS),windows)
@@ -39,6 +38,9 @@ GO_LDFLAGS := -X $(PROJECT)/vendor/github.com/containerd/containerd/version.Vers
 SOURCES := $(shell find cmd/ pkg/ vendor/ -name '*.go')
 PLUGIN_SOURCES := $(shell ls *.go)
 INTEGRATION_SOURCES := $(shell find integration/ -name '*.go')
+ifeq ($(GOARCH),amd64)
+	TESTFLAGS_RACE := -race
+endif
 
 CONTAINERD_BIN := containerd
 ifeq ($(GOOS),windows)
@@ -92,21 +94,12 @@ $(BUILD_DIR)/$(CONTAINERD_BIN): $(SOURCES) $(PLUGIN_SOURCES)
 		-gcflags '$(GO_GCFLAGS)' \
 		$(PROJECT)/cmd/containerd
 
-ifeq ($(ARCH),s390x)
 test: ## unit test
 	@echo "$(WHALE) $@"
-	$(GO) test -timeout=10m ./pkg/... \
-			-tags '$(BUILD_TAGS)' \
-	        	-ldflags '$(GO_LDFLAGS)' \
-			-gcflags '$(GO_GCFLAGS)'
-else
-test: ## unit test
-	@echo "$(WHALE) $@"
-	$(GO) test -timeout=10m -race ./pkg/... \
+	$(GO) test -timeout=10m $(TESTFLAGS_RACE) ./pkg/... \
 		-tags '$(BUILD_TAGS)' \
 	        -ldflags '$(GO_LDFLAGS)' \
 		-gcflags '$(GO_GCFLAGS)'
-endif
 
 $(BUILD_DIR)/integration.test: $(INTEGRATION_SOURCES)
 	@echo "$(WHALE) $@"
