@@ -47,13 +47,9 @@ script:
   - make install.deps
   - make containerd
   - sudo PATH=$PATH GOPATH=$GOPATH make install-containerd
-  - if [ "$HOSTTYPE" == "s390x" ];then
-      make test;
-    else 
-      make test;
-      make test-integration;
-      make test-cri;
-    fi  
+  - make test
+  - make test-integration
+  - make test-cri
 after_script:
   # Abuse travis to preserve the log.
   - cat /tmp/test-integration/containerd.log
