@@ -50,6 +50,7 @@ script:
   - make test
   - make test-integration
   - make test-cri
+  
 after_script:
   # Abuse travis to preserve the log.
   - cat /tmp/test-integration/containerd.log
