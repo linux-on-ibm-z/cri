@@ -39,6 +39,11 @@ SOURCES := $(shell find cmd/ pkg/ vendor/ -name '*.go')
 PLUGIN_SOURCES := $(shell ls *.go)
 INTEGRATION_SOURCES := $(shell find integration/ -name '*.go')
 
+TESTFLAGS_RACE := -race
+ifeq ($(GOARCH),s390x)
+        TESTFLAGS_RACE :=
+endif
+
 CONTAINERD_BIN := containerd
 ifeq ($(GOOS),windows)
 	CONTAINERD_BIN := $(CONTAINERD_BIN).exe
@@ -93,7 +98,7 @@ $(BUILD_DIR)/$(CONTAINERD_BIN): $(SOURCES) $(PLUGIN_SOURCES)
 
 test: ## unit test
 	@echo "$(WHALE) $@"
-	$(GO) test -timeout=10m -race ./pkg/... \
+	$(GO) test -timeout=10m $(TESTFLAGS_RACE) ./pkg/... \
 		-tags '$(BUILD_TAGS)' \
 	        -ldflags '$(GO_LDFLAGS)' \
 		-gcflags '$(GO_GCFLAGS)'
